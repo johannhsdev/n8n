@@ -1,0 +1,49 @@
+services:
+
+  db-init:
+    image: postgres:17-alpine
+
+    env_file:
+      - .env
+
+    volumes:
+      - ./scripts/init-db.sh:/init-db.sh:ro
+
+    entrypoint:
+      - /bin/sh
+      - /init-db.sh
+
+    networks:
+      - local-infra
+
+    profiles:
+      - tools
+
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+
+    container_name: local_n8n
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    ports:
+      - "5678:5678"
+
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+    networks:
+      - local-infra
+
+
+volumes:
+  n8n_data:
+
+
+networks:
+  local-infra:
+    external: true
+    name: local-infra-dev_default

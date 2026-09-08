@@ -1,0 +1,18 @@
+# Environment
+.env
+
+# Backups
+backups/
+*.sql
+*.dump
+*.tar
+*.gz
+
+# Logs
+*.log
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
